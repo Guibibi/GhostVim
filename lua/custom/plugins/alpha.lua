@@ -14,6 +14,7 @@ return {
 			"|   |_| ||   _   ||       | _____| |  |   |   |     | |   | | ||_|| |",
 			"|_______||__| |__||_______||_______|  |___|    |___|  |___| |_|   |_|",
 		}
+
 		-- Set our menu
 		dashboard.section.buttons.val = {
 			dashboard.button("e", "  New file", ":ene <BAR> startinsert <CR>"),
