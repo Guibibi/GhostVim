@@ -124,9 +124,11 @@ require('lazy').setup({
     'nvim-treesitter/nvim-treesitter',
     dependencies = {
       'nvim-treesitter/nvim-treesitter-textobjects',
+      'JoosepAlviste/nvim-ts-context-commentstring'
     },
     config = function()
       pcall(require('nvim-treesitter.install').update { with_sync = true })
+
     end,
   },
 
@@ -147,6 +149,9 @@ require('lazy').setup({
 
 -- [[ Setting options ]]
 -- See `:help vim.o`
+
+-- Auto cd to the folder
+vim.o.autochdir = true
 
 -- Set highlight on search
 vim.o.hlsearch = true
@@ -294,6 +299,9 @@ require('nvim-treesitter.configs').setup {
         ['[]'] = '@class.outer',
       },
     },
+  },
+  context_commentstring = {
+    enable = true
   },
 }
 
