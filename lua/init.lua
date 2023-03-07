@@ -59,7 +59,7 @@ require('lazy').setup({
   { -- Adds git releated signs to the gutter, as well as utilities for managing changes
     'lewis6991/gitsigns.nvim',
     keys = {
-      {"<leader>gb", "<cmd>Gitsigns blame_line<cr>", desc = "Git blame line"}
+      { "<leader>gb", "<cmd>Gitsigns blame_line<cr>", desc = "Git blame line" }
     },
     opts = {
       -- See `:help gitsigns.txt`
@@ -131,7 +131,6 @@ require('lazy').setup({
     },
     config = function()
       pcall(require('nvim-treesitter.install').update { with_sync = true })
-
     end,
   },
 
