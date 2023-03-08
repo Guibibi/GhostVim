@@ -43,7 +43,7 @@ require('lazy').setup({
 
   { -- Autocompletion
     'hrsh7th/nvim-cmp',
-    dependencies = { 'hrsh7th/cmp-nvim-lsp', 'L3MON4D3/LuaSnip', 'saadparwaiz1/cmp_luasnip' },
+    dependencies = { 'hrsh7th/cmp-nvim-lsp', 'L3MON4D3/LuaSnip', 'saadparwaiz1/cmp_luasnip', 'rafamadriz/friendly-snippets', 'hrsh7th/cmp-path' },
   },
 
   -- Useful plugin to show you pending keybinds.
@@ -87,7 +87,7 @@ require('lazy').setup({
     -- See `:help lualine.txt`
     opts = {
       options = {
-        icons_enabled = false,
+        icons_enabled = true,
         theme = 'onedark',
         component_separators = '|',
         section_separators = '',
@@ -155,7 +155,7 @@ require('lazy').setup({
 -- See `:help vim.o`
 
 -- Auto cd to the folder
-vim.o.autochdir = true
+-- vim.o.autochdir = true
 
 -- Set highlight on search
 vim.o.hlsearch = true
@@ -445,6 +445,7 @@ cmp.setup {
   sources = {
     { name = 'nvim_lsp' },
     { name = 'luasnip' },
+    { name = 'path'},
   },
 }
 
