@@ -6,7 +6,8 @@ return {
 		require("mini.surround").setup()
 		require("mini.cursorword").setup()
 		require("mini.move").setup()
-		require("mini.animate").setup()
+--		require("mini.animate").setup()
 		require("mini.basics").setup()
+		require("mini.splitjoin").setup()
 	end
 }
