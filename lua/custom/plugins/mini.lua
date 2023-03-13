@@ -8,5 +8,7 @@ return {
 		require("mini.move").setup()
 		require("mini.animate").setup()
 		require("mini.basics").setup()
+		require("mini.splitjoin").setup()
+		require("mini.bufremove").setup()
 	end
 }
