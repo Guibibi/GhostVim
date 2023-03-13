@@ -43,7 +43,7 @@ require('lazy').setup({
 
   { -- Autocompletion
     'hrsh7th/nvim-cmp',
-    dependencies = { 'hrsh7th/cmp-nvim-lsp', 'L3MON4D3/LuaSnip', 'saadparwaiz1/cmp_luasnip', 'rafamadriz/friendly-snippets', 'hrsh7th/cmp-path' },
+    dependencies = { 'hrsh7th/cmp-nvim-lsp', 'L3MON4D3/LuaSnip', 'saadparwaiz1/cmp_luasnip', 'hrsh7th/cmp-path' },
   },
 
   -- Useful plugin to show you pending keybinds.
@@ -58,9 +58,9 @@ require('lazy').setup({
   { -- Adds git releated signs to the gutter, as well as utilities for managing changes
     'lewis6991/gitsigns.nvim',
     keys = {
-      {"<leader>gb", "<cmd>Gitsigns blame_line<cr>", desc = "Git Blame Line"},
-      {"<leader>gd", "<cmd>Gitsigns toggle_deleted<cr>", desc = "Git Toggle Deleted"},
-      {"<leader>gt", "<cmd>Gitsigns diffthis<cr>", desc = "Git Diff This"},
+      { "<leader>gb", "<cmd>Gitsigns blame_line<cr>",     desc = "Git Blame Line" },
+      { "<leader>gd", "<cmd>Gitsigns toggle_deleted<cr>", desc = "Git Toggle Deleted" },
+      { "<leader>gt", "<cmd>Gitsigns diffthis<cr>",       desc = "Git Diff This" },
     },
     opts = {
       -- See `:help gitsigns.txt`
@@ -78,7 +78,7 @@ require('lazy').setup({
     'navarasu/onedark.nvim',
     priority = 1000,
     config = function()
-      vim.cmd.colorscheme 'onedark'
+      vim.cmd.colorscheme 'monokai-pro'
     end,
   },
 
@@ -88,10 +88,35 @@ require('lazy').setup({
     opts = {
       options = {
         icons_enabled = true,
-        theme = 'onedark',
+        theme = 'auto',
         component_separators = '|',
         section_separators = '',
       },
+      sections = {
+        lualine_c = {
+          {
+            'filename',
+            color = { fg = '#ffd75f', bg = 'grey', gui='italic,bold' },
+            {"b", "blue"},
+            {"c", "red"},
+            file_status = true, -- Displays file status (readonly status, modified status)
+            newfile_status = true, -- Display new file status (new file means no write after created)
+            path = 1, -- 0: Just the filename
+            -- 1: Relative path
+            -- 2: Absolute path
+            -- 3: Absolute path, with tilde as the home directory
+
+            shorting_target = 40, -- Shortens path to leave 40 spaces in the window
+            -- for other components. (terrible name, any suggestions?)
+            symbols = {
+              modified = '[+]', -- Text to show when the file is modified.
+              readonly = '[-]', -- Text to show when the file is non-modifiable or readonly.
+              unnamed = '[No Name]', -- Text to show for unnamed buffers.
+              newfile = '[New]', -- Text to show for newly created file before first write
+            }
+          }
+        }
+      }
     },
   },
 
@@ -132,7 +157,6 @@ require('lazy').setup({
     },
     config = function()
       pcall(require('nvim-treesitter.install').update { with_sync = true })
-
     end,
   },
 
@@ -203,6 +227,10 @@ vim.o.termguicolors = true
 -- Keymaps for better default experience
 -- See `:help vim.keymap.set()`
 vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
+
+vim.keymap.set({ 'n' }, '<A-c>', '<cmd>bdelete<cr>', { silent = true })
+vim.keymap.set({ 'n' }, '<A-.>', '<cmd>bnext<cr>', { silent = true })
+vim.keymap.set({ 'n' }, '<A-,>', '<cmd>bprevious<cr>', { silent = true })
 
 -- [[ Highlight on yank ]]
 -- See `:help vim.highlight.on_yank()`
@@ -446,7 +474,7 @@ cmp.setup {
   sources = {
     { name = 'nvim_lsp' },
     { name = 'luasnip' },
-    { name = 'path'},
+    { name = 'path' },
   },
 }
 
