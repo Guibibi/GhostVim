@@ -57,6 +57,7 @@ require('lazy').setup({
   end },
   { -- Adds git releated signs to the gutter, as well as utilities for managing changes
     'lewis6991/gitsigns.nvim',
+    lazy= false,
     keys = {
       { "<leader>gb", "<cmd>Gitsigns blame_line<cr>",     desc = "Git Blame Line" },
       { "<leader>gd", "<cmd>Gitsigns toggle_deleted<cr>", desc = "Git Toggle Deleted" },
@@ -231,6 +232,11 @@ vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 vim.keymap.set({ 'n' }, '<A-c>', '<cmd>bdelete<cr>', { silent = true })
 vim.keymap.set({ 'n' }, '<A-.>', '<cmd>bnext<cr>', { silent = true })
 vim.keymap.set({ 'n' }, '<A-,>', '<cmd>bprevious<cr>', { silent = true })
+vim.keymap.set({ 'n' }, '<leader>w', '<cmd>w<cr>', {desc = 'Save File'})
+
+-- Create a console.log with the word under the cursor
+vim.keymap.set({'n'}, '<leader>cl',
+[["ayiwoconsole.log('<C-R>a:', <C-R>a);<Esc>"]], {desc= "Console.log Word"})
 
 -- [[ Highlight on yank ]]
 -- See `:help vim.highlight.on_yank()`
@@ -271,13 +277,15 @@ vim.keymap.set('n', '<leader><space>', require('telescope.builtin').find_files, 
 --   })
 -- end, { desc = 'Fuzzily search in current buffer' })
 
-vim.keymap.set('n', '<leader>sf', require('telescope.builtin').find_files, { desc = '[S]earch [F]iles' })
-vim.keymap.set('n', '<leader>sb', require('telescope.builtin').buffers, { desc = '[S]earch [B]uffer' })
-vim.keymap.set('n', '<leader>sh', require('telescope.builtin').help_tags, { desc = '[S]earch [H]elp' })
-vim.keymap.set('n', '<leader>sw', require('telescope.builtin').grep_string, { desc = '[S]earch current [W]ord' })
-vim.keymap.set('n', '<leader>sg', require('telescope.builtin').live_grep, { desc = '[S]earch by [G]rep' })
-vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { desc = '[S]earch [D]iagnostics' })
+vim.keymap.set('n', '<leader>sf', require('telescope.builtin').find_files, { desc = 'Search Files' })
+vim.keymap.set('n', '<leader>sb', require('telescope.builtin').buffers, { desc = 'Search Buffer' })
+vim.keymap.set('n', '<leader>sh', require('telescope.builtin').help_tags, { desc = 'Search Help' })
+vim.keymap.set('n', '<leader>sw', require('telescope.builtin').grep_string, { desc = 'Search current Word' })
+vim.keymap.set('n', '<leader>sg', require('telescope.builtin').live_grep, { desc = 'Search by Grep' })
+vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { desc = 'Search Diagnostics' })
+vim.keymap.set('n', '<leader>ss', require('telescope.builtin').lsp_document_symbols, { desc = 'Search Buffer Symbols' })
 vim.keymap.set('n', '<leader>sc', require('telescope.builtin').colorscheme, { desc = 'Search Colorschemes' })
+vim.keymap.set('n', '<leader>sp', require('telescope').extensions.projects.projects, { desc = 'Select Project' })
 
 -- [[ Configure Treesitter ]]
 -- See `:help nvim-treesitter`
@@ -342,6 +350,8 @@ require('nvim-treesitter.configs').setup {
 -- Diagnostic keymaps
 vim.keymap.set('n', 'gk', vim.diagnostic.goto_prev)
 vim.keymap.set('n', 'gj', vim.diagnostic.goto_next)
+-- vim.keymap.set('n','<Leader>cl', '\\"ayiwOconsole.log(\\\'<C-R>a:\\\', <C-R>a);<Esc>\\"', {desc= 'Console.log Word'});
+
 -- vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float)
 -- vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist)
 
@@ -361,7 +371,6 @@ local on_attach = function(_, bufnr)
 
     vim.keymap.set('n', keys, func, { buffer = bufnr, desc = desc })
   end
-
   nmap('<leader>cr', vim.lsp.buf.rename, '[R]e[n]ame')
   nmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
 
