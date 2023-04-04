@@ -25,7 +25,8 @@ require('lazy').setup({
   -- Detect tabstop and shiftwidth automatically
   'tpope/vim-sleuth',
 
-  { -- LSP Configuration & Plugins
+  {
+    -- LSP Configuration & Plugins
     'neovim/nvim-lspconfig',
     dependencies = {
       -- Automatically install LSPs to stdpath for neovim
@@ -41,23 +42,29 @@ require('lazy').setup({
     },
   },
 
-  { -- Autocompletion
+  {
+    -- Autocompletion
     'hrsh7th/nvim-cmp',
     dependencies = { 'hrsh7th/cmp-nvim-lsp', 'L3MON4D3/LuaSnip', 'saadparwaiz1/cmp_luasnip', 'hrsh7th/cmp-path' },
   },
 
   -- Useful plugin to show you pending keybinds.
-  { 'folke/which-key.nvim', opts = {}, config = function()
-    local wk = require("which-key")
-    wk.register({
-      ["<leader>s"] = { name = "Search" },
-      ["<leader>c"] = { name = "Code Actions" },
-      ["<leader>g"] = { name = "Git Actions" },
-    })
-  end },
-  { -- Adds git releated signs to the gutter, as well as utilities for managing changes
+  {
+    'folke/which-key.nvim',
+    opts = {},
+    config = function()
+      local wk = require("which-key")
+      wk.register({
+            ["<leader>s"] = { name = "Search" },
+            ["<leader>c"] = { name = "Code Actions" },
+            ["<leader>g"] = { name = "Git Actions" },
+      })
+    end
+  },
+  {
+    -- Adds git releated signs to the gutter, as well as utilities for managing changes
     'lewis6991/gitsigns.nvim',
-    lazy= false,
+    lazy = false,
     keys = {
       { "<leader>gb", "<cmd>Gitsigns blame_line<cr>",     desc = "Git Blame Line" },
       { "<leader>gd", "<cmd>Gitsigns toggle_deleted<cr>", desc = "Git Toggle Deleted" },
@@ -75,7 +82,8 @@ require('lazy').setup({
     },
   },
 
-  { -- Theme inspired by Atom
+  {
+    -- Theme inspired by Atom
     'navarasu/onedark.nvim',
     priority = 1000,
     config = function()
@@ -83,7 +91,8 @@ require('lazy').setup({
     end,
   },
 
-  { -- Set lualine as statusline
+  {
+    -- Set lualine as statusline
     'nvim-lualine/lualine.nvim',
     -- See `:help lualine.txt`
     opts = {
@@ -97,12 +106,12 @@ require('lazy').setup({
         lualine_c = {
           {
             'filename',
-            color = { fg = '#ffd75f', bg = 'grey', gui='italic,bold' },
-            {"b", "blue"},
-            {"c", "red"},
-            file_status = true, -- Displays file status (readonly status, modified status)
+            color = { fg = '#ffd75f', bg = 'grey', gui = 'italic,bold' },
+            { "b", "blue" },
+            { "c", "red" },
+            file_status = true,    -- Displays file status (readonly status, modified status)
             newfile_status = true, -- Display new file status (new file means no write after created)
-            path = 1, -- 0: Just the filename
+            path = 1,              -- 0: Just the filename
             -- 1: Relative path
             -- 2: Absolute path
             -- 3: Absolute path, with tilde as the home directory
@@ -110,10 +119,10 @@ require('lazy').setup({
             shorting_target = 40, -- Shortens path to leave 40 spaces in the window
             -- for other components. (terrible name, any suggestions?)
             symbols = {
-              modified = '[+]', -- Text to show when the file is modified.
-              readonly = '[-]', -- Text to show when the file is non-modifiable or readonly.
+              modified = '[+]',      -- Text to show when the file is modified.
+              readonly = '[-]',      -- Text to show when the file is non-modifiable or readonly.
               unnamed = '[No Name]', -- Text to show for unnamed buffers.
-              newfile = '[New]', -- Text to show for newly created file before first write
+              newfile = '[New]',     -- Text to show for newly created file before first write
             }
           }
         }
@@ -121,7 +130,8 @@ require('lazy').setup({
     },
   },
 
-  { -- Add indentation guides even on blank lines
+  {
+    -- Add indentation guides even on blank lines
     'lukas-reineke/indent-blankline.nvim',
     -- Enable `lukas-reineke/indent-blankline.nvim`
     -- See `:help indent_blankline.txt`
@@ -150,7 +160,8 @@ require('lazy').setup({
     end,
   },
 
-  { -- Highlight, edit, and navigate code
+  {
+    -- Highlight, edit, and navigate code
     'nvim-treesitter/nvim-treesitter',
     dependencies = {
       'nvim-treesitter/nvim-treesitter-textobjects',
@@ -232,11 +243,11 @@ vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 vim.keymap.set({ 'n' }, '<A-c>', '<cmd>bdelete<cr>', { silent = true })
 vim.keymap.set({ 'n' }, '<A-.>', '<cmd>bnext<cr>', { silent = true })
 vim.keymap.set({ 'n' }, '<A-,>', '<cmd>bprevious<cr>', { silent = true })
-vim.keymap.set({ 'n' }, '<leader>w', '<cmd>w<cr>', {desc = 'Save File'})
+vim.keymap.set({ 'n' }, '<leader>w', '<cmd>w<cr>', { desc = 'Save File' })
 
 -- Create a console.log with the word under the cursor
-vim.keymap.set({'n'}, '<leader>cl',
-[["ayiwoconsole.log('<C-R>a:', <C-R>a);<Esc>"]], {desc= "Console.log Word"})
+vim.keymap.set({ 'n' }, '<leader>cl',
+  [["ayiwoconsole.log('<C-R>a:', <C-R>a);<Esc>"]], { desc = "Console.log Word" })
 
 -- [[ Highlight on yank ]]
 -- See `:help vim.highlight.on_yank()`
@@ -255,8 +266,8 @@ require('telescope').setup {
   defaults = {
     mappings = {
       i = {
-        ['<C-u>'] = false,
-        ['<C-d>'] = false,
+            ['<C-u>'] = false,
+            ['<C-d>'] = false,
       },
     },
   },
@@ -313,32 +324,32 @@ require('nvim-treesitter.configs').setup {
       lookahead = true, -- Automatically jump forward to textobj, similar to targets.vim
       keymaps = {
         -- You can use the capture groups defined in textobjects.scm
-        ['aa'] = '@parameter.outer',
-        ['ia'] = '@parameter.inner',
-        ['af'] = '@function.outer',
-        ['if'] = '@function.inner',
-        ['ac'] = '@class.outer',
-        ['ic'] = '@class.inner',
+            ['aa'] = '@parameter.outer',
+            ['ia'] = '@parameter.inner',
+            ['af'] = '@function.outer',
+            ['if'] = '@function.inner',
+            ['ac'] = '@class.outer',
+            ['ic'] = '@class.inner',
       },
     },
     move = {
       enable = true,
       set_jumps = true, -- whether to set jumps in the jumplist
       goto_next_start = {
-        [']m'] = '@function.outer',
-        [']]'] = '@class.outer',
+            [']m'] = '@function.outer',
+            [']]'] = '@class.outer',
       },
       goto_next_end = {
-        [']M'] = '@function.outer',
-        [']['] = '@class.outer',
+            [']M'] = '@function.outer',
+            [']['] = '@class.outer',
       },
       goto_previous_start = {
-        ['[m'] = '@function.outer',
-        ['[['] = '@class.outer',
+            ['[m'] = '@function.outer',
+            ['[['] = '@class.outer',
       },
       goto_previous_end = {
-        ['[M'] = '@function.outer',
-        ['[]'] = '@class.outer',
+            ['[M'] = '@function.outer',
+            ['[]'] = '@class.outer',
       },
     },
   },
@@ -392,7 +403,12 @@ local on_attach = function(_, bufnr)
   vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
     vim.lsp.buf.format()
   end, { desc = 'Format current buffer with LSP' })
+
+  vim.api.nvim_buf_create_user_command(bufnr, 'W', function(_)
+    vim.cmd.write()
+  end, { desc = 'Save current buffer' })
 end
+
 
 -- Enable the following language servers
 --  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
@@ -454,14 +470,14 @@ cmp.setup {
     end,
   },
   mapping = cmp.mapping.preset.insert {
-    ['<C-d>'] = cmp.mapping.scroll_docs( -4),
-    ['<C-f>'] = cmp.mapping.scroll_docs(4),
-    ['<C-Space>'] = cmp.mapping.complete {},
-    ['<CR>'] = cmp.mapping.confirm {
+        ['<C-d>'] = cmp.mapping.scroll_docs(-4),
+        ['<C-f>'] = cmp.mapping.scroll_docs(4),
+        ['<C-Space>'] = cmp.mapping.complete {},
+        ['<CR>'] = cmp.mapping.confirm {
       behavior = cmp.ConfirmBehavior.Replace,
       select = true,
     },
-    ['<Tab>'] = cmp.mapping(function(fallback)
+        ['<Tab>'] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_next_item()
       elseif luasnip.expand_or_jumpable() then
@@ -470,11 +486,11 @@ cmp.setup {
         fallback()
       end
     end, { 'i', 's' }),
-    ['<S-Tab>'] = cmp.mapping(function(fallback)
+        ['<S-Tab>'] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_prev_item()
-      elseif luasnip.jumpable( -1) then
-        luasnip.jump( -1)
+      elseif luasnip.jumpable(-1) then
+        luasnip.jump(-1)
       else
         fallback()
       end
