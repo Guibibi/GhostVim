@@ -87,7 +87,15 @@ require('lazy').setup({
     'navarasu/onedark.nvim',
     priority = 1000,
     config = function()
+      local current_time = os.date("*t")
+
+      local hour = current_time.hour
+
+      if hour >= 8 and hour < 18 then
+      vim.cmd.colorscheme 'kanagawa-lotus'
+      else
       vim.cmd.colorscheme 'monokai-pro'
+      end
     end,
   },
 
