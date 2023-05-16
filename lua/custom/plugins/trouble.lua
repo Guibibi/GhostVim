@@ -4,6 +4,6 @@ return {
 		require('trouble').setup()
 	end,
 	keys = {
-		{ "<leader>ct", "<cmd>TroubleToggle<cr>", desc = "Toggle Trouble" }
+		{ "<leader>t", "<cmd>TroubleToggle<cr>", desc = "Toggle Trouble" }
 	}
 }
