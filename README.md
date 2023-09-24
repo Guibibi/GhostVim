@@ -8,3 +8,6 @@ Free to use, free to disagree with my keybindings 😉
 https://github.com/BurntSushi/ripgrep
 
 https://github.com/nvim-telescope/telescope-fzf-native.nvim
+
+### A Nerd font to show icons
+https://www.nerdfonts.com/font-downloads
