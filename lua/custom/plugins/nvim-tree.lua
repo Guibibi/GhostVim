@@ -1,8 +1,12 @@
 return {
 	"nvim-neo-tree/neo-tree.nvim",
-	-- config = function()
-	-- 	require("nvim-tree").setup()
-	-- end,
+	config = function()
+		require("neo-tree").setup({
+			window = {
+				position = "right"
+			},
+		})
+	end,
 	dependencies = {
 		"nvim-lua/plenary.nvim",
 		"nvim-tree/nvim-web-devicons",
