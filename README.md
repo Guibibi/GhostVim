@@ -8,3 +8,9 @@ Free to use, free to disagree with my keybindings 😉
 https://github.com/BurntSushi/ripgrep
 
 https://github.com/nvim-telescope/telescope-fzf-native.nvim
+
+## Zig (On windows) to compile Treesitter
+https://community.chocolatey.org/packages/zig
+
+### A Nerd font to show icons
+https://www.nerdfonts.com/font-downloads
