@@ -35,7 +35,7 @@ require('lazy').setup({
 
       -- Useful status updates for LSP
       -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
-      { 'j-hui/fidget.nvim', opts = {} },
+      { 'j-hui/fidget.nvim', branch="legacy", opts = {} },
 
       -- Additional lua configuration, makes nvim stuff amazing!
       'folke/neodev.nvim',
@@ -91,11 +91,12 @@ require('lazy').setup({
 
       local hour = current_time.hour
 
-      if hour >= 8 and hour < 18 then
-        vim.cmd.colorscheme 'kanagawa-lotus'
-      else
-        vim.cmd.colorscheme 'monokai-pro'
-      end
+      vim.cmd.colorscheme('tokyonight-storm')
+      -- if hour >= 8 and hour < 18 then
+      --   vim.cmd.colorscheme 'kanagawa-lotus'
+      -- else
+      --   vim.cmd.colorscheme 'monokai-pro'
+      -- end
     end,
   },
 
@@ -138,17 +139,7 @@ require('lazy').setup({
     },
   },
 
-  {
-    -- Add indentation guides even on blank lines
-    'lukas-reineke/indent-blankline.nvim',
-    -- Enable `lukas-reineke/indent-blankline.nvim`
-    -- See `:help indent_blankline.txt`
-    opts = {
-      char = '┊',
-      show_trailing_blankline_indent = false,
-    },
-  },
-
+  { "lukas-reineke/indent-blankline.nvim", main = "ibl", opts = {} },
   -- "gc" to comment visual regions/lines
   { 'numToStr/Comment.nvim',         opts = {} },
 
@@ -197,9 +188,6 @@ require('lazy').setup({
 
 -- [[ Setting options ]]
 -- See `:help vim.o`
-
--- Auto cd to the folder
--- vim.o.autochdir = true
 
 -- Set highlight on search
 vim.o.hlsearch = true

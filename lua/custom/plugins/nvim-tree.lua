@@ -13,7 +13,7 @@ return {
 		"MunifTanjim/nui.nvim",
 	},
 	keys = {
-		{ "<leader>e", "<cmd>NeoTreeShowToggle<cr>",  desc = "Open Filebrowser" },
-		{ "<leader>E", "<cmd>NeoTreeFloatToggle<cr>", desc = "Open Float Filebrowser" }
+		{ "<leader>e", "<cmd>Neotree toggle right<cr>",  desc = "Open Filebrowser" },
+		{ "<leader>E", "<cmd>Neotree toggle float<cr>", desc = "Open Float Filebrowser" }
 	},
 }
