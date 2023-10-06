@@ -6,7 +6,7 @@ return {
 	opts = {
 		options = {
 			icons_enabled = true,
-			theme = 'auto',
+			theme = 'tokyonight',
 			component_separators = '|',
 			section_separators = '',
 		},
@@ -40,10 +40,10 @@ return {
 			lualine_c = {
 			}
 		},
-		winbar = {
-			lualine_a = {
-				"navic",
-			}
-		}
+		-- winbar = {
+		-- 	lualine_a = {
+		-- 		"navic",
+		-- 	}
+		-- }
 	},
 }
