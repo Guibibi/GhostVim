@@ -101,9 +101,6 @@ require('lazy').setup({
   },
 
 
-  { "lukas-reineke/indent-blankline.nvim", main = "ibl",  opts = {} },
-  -- "gc" to comment visual regions/lines
-  { 'numToStr/Comment.nvim',               opts = {} },
 
   -- Fuzzy Finder (files, lsp, etc)
   { 'nvim-telescope/telescope.nvim',       version = '*', dependencies = { 'nvim-lua/plenary.nvim' } },
@@ -145,7 +142,9 @@ require('lazy').setup({
   --
   --    An additional note is that if you only copied in the `init.lua`, you can just comment this line
   --    to get rid of the warning telling you that there are not plugins in `lua/custom/plugins/`.
-  { import = 'custom.plugins' },
+  { import = 'custom.plugins'},
+  { import = 'custom.plugins.editor'},
+  { import = 'custom.plugins.ui'}
 }, {})
 
 -- [[ Setting options ]]
@@ -323,10 +322,6 @@ require('nvim-treesitter.configs').setup {
   },
 }
 
--- Diagnostic keymaps
-vim.keymap.set('n', 'gk', vim.diagnostic.goto_prev)
-vim.keymap.set('n', 'gj', vim.diagnostic.goto_next)
--- vim.keymap.set('n','<Leader>cl', '\\"ayiwOconsole.log(\\\'<C-R>a:\\\', <C-R>a);<Esc>\\"', {desc= 'Console.log Word'});
 
 -- vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float)
 -- vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist)
@@ -350,23 +345,26 @@ local on_attach = function(client, bufnr)
     navic.attach(client, bufnr)
   end
 
-  nmap('<leader>cr', vim.lsp.buf.rename, 'Rename')
-  nmap('<leader>ca', vim.lsp.buf.code_action, 'Code Action')
+  nmap('<leader>cr', "<cmd>LspUI rename<CR>", 'Rename')
+  nmap('<leader>ca', "<cmd>LspUI code_action<CR>", 'Code Action')
   nmap('<leader>f', vim.lsp.buf.format, 'Format File')
 
-  nmap('gd', vim.lsp.buf.definition, 'Goto Definition')
-  nmap('gr', require('telescope.builtin').lsp_references, 'Goto References')
-  nmap('gI', vim.lsp.buf.implementation, 'Goto Implementation')
-  nmap('<leader>cD', vim.lsp.buf.type_definition, 'Type Definition')
+  nmap('gd', "<cmd>LspUI definition<CR>", 'Goto Definition')
+  nmap('gr', "<cmd>LspUI reference<CR>", 'Goto References')
+  nmap('gI', "<cmd>LspUI implementation<CR>", 'Goto Implementation')
+  nmap('<leader>cD', "<cmd>LspUI type_definition<CR>", 'Type Definition')
   nmap('<leader>cs', require('telescope.builtin').lsp_document_symbols, 'Document Symbols')
   nmap('<leader>cS', require('telescope.builtin').lsp_dynamic_workspace_symbols, 'Workspace Symbols')
 
-  -- See `:help K` for why this keymap
-  nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
+  nmap('K', "<cmd>LspUI hover  <CR>", 'Hover Documentation')
   nmap('<C-k>', vim.lsp.buf.signature_help, 'Signature Documentation')
 
+  -- Diagnostic keymaps
+  nmap('gk', "<cmd>LspUI diagnostic prev<CR>", "Previous diagnostic")
+  nmap('gj', "<cmd>LspUI diagnostic next<CR>", "Next diagnostic")
+
   -- Lesser used LSP functionality
-  nmap('gD', vim.lsp.buf.declaration, 'Goto Declaration')
+  nmap('gD', "<cmd>LspUI declarationCR>", 'Goto Declaration')
 
   -- Create a command `:Format` local to the LSP buffer
   vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
@@ -429,6 +427,7 @@ mason_lspconfig.setup_handlers {
 -- nvim-cmp setup
 local cmp = require 'cmp'
 local luasnip = require 'luasnip'
+local lspkind = require 'lspkind'
 
 luasnip.config.setup {}
 
@@ -437,6 +436,13 @@ cmp.setup {
     expand = function(args)
       luasnip.lsp_expand(args.body)
     end,
+  },
+  formatting = {
+    format = lspkind.cmp_format({
+      mode = 'symbol',
+      maxwidth = 50,
+      ellipsis_char = '...'
+    })
   },
   mapping = cmp.mapping.preset.insert {
     ['<C-d>'] = cmp.mapping.scroll_docs(-4),
@@ -469,6 +475,7 @@ cmp.setup {
     { name = 'nvim_lsp' },
     { name = 'luasnip' },
     { name = 'path' },
+    { name = 'buffer'},
   },
 }
 
