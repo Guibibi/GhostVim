@@ -10,5 +10,6 @@ return {
 		require("mini.basics").setup()
 		require("mini.splitjoin").setup()
 		require("mini.bufremove").setup()
+		require("mini.sessions").setup()
 	end
 }
