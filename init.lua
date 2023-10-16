@@ -21,10 +21,6 @@ vim.opt.rtp:prepend(lazypath)
 
 -- Setup the package manager
 require('lazy').setup({
-
-  -- Detect tabstop and shiftwidth automatically
-  'tpope/vim-sleuth',
-
   {
     -- LSP Configuration & Plugins
     'neovim/nvim-lspconfig',
@@ -61,26 +57,7 @@ require('lazy').setup({
       })
     end
   },
-  {
-    -- Adds git releated signs to the gutter, as well as utilities for managing changes
-    'lewis6991/gitsigns.nvim',
-    lazy = false,
-    keys = {
-      { "<leader>gb", "<cmd>Gitsigns blame_line<cr>",     desc = "Git Blame Line" },
-      { "<leader>gd", "<cmd>Gitsigns toggle_deleted<cr>", desc = "Git Toggle Deleted" },
-      { "<leader>gt", "<cmd>Gitsigns diffthis<cr>",       desc = "Git Diff This" },
-    },
-    opts = {
-      -- See `:help gitsigns.txt`
-      signs = {
-        add = { text = '+' },
-        change = { text = '~' },
-        delete = { text = '_' },
-        topdelete = { text = '‾' },
-        changedelete = { text = '~' },
-      },
-    },
-  },
+
 
   {
     -- Theme inspired by Atom
@@ -100,10 +77,8 @@ require('lazy').setup({
     end,
   },
 
-
-
   -- Fuzzy Finder (files, lsp, etc)
-  { 'nvim-telescope/telescope.nvim',       version = '*', dependencies = { 'nvim-lua/plenary.nvim' } },
+  { 'nvim-telescope/telescope.nvim', version = '*', dependencies = { 'nvim-lua/plenary.nvim' } },
 
   -- Fuzzy Finder Algorithm which requires local dependencies to be built.
   -- Only load if `make` is available. Make sure you have the system
@@ -123,7 +98,8 @@ require('lazy').setup({
     'nvim-treesitter/nvim-treesitter',
     dependencies = {
       'nvim-treesitter/nvim-treesitter-textobjects',
-      'JoosepAlviste/nvim-ts-context-commentstring'
+      'JoosepAlviste/nvim-ts-context-commentstring',
+      'windwp/nvim-ts-autotag'
     },
     config = function()
       pcall(require('nvim-treesitter.install').update { with_sync = true })
@@ -142,9 +118,9 @@ require('lazy').setup({
   --
   --    An additional note is that if you only copied in the `init.lua`, you can just comment this line
   --    to get rid of the warning telling you that there are not plugins in `lua/custom/plugins/`.
-  { import = 'custom.plugins'},
-  { import = 'custom.plugins.editor'},
-  { import = 'custom.plugins.ui'}
+  { import = 'custom.plugins' },
+  { import = 'custom.plugins.editor' },
+  { import = 'custom.plugins.ui' }
 }, {})
 
 -- [[ Setting options ]]
@@ -153,7 +129,8 @@ require('lazy').setup({
 -- Set highlight on search
 vim.o.hlsearch = true
 
-vim.o.cmdheight = 0
+-- Show cmd
+vim.o.cmdheight = 1
 
 -- Make line numbers default
 vim.wo.number = true
@@ -208,6 +185,7 @@ vim.keymap.set({ 'n' }, '<A-c>', '<cmd>bdelete<cr>', { silent = true })
 vim.keymap.set({ 'n' }, '<A-.>', '<cmd>bnext<cr>', { silent = true })
 vim.keymap.set({ 'n' }, '<A-,>', '<cmd>bprevious<cr>', { silent = true })
 vim.keymap.set({ 'n' }, '<leader>w', '<cmd>w<cr>', { desc = 'Save File' })
+vim.keymap.set({ 'n' }, '<leader>z', '<cmd>:ZenMode<cr>', {desc = 'Zen Mode'})
 
 -- Create a console.log with the word under the cursor
 vim.keymap.set({ 'n' }, '<leader>cl',
@@ -252,6 +230,8 @@ vim.keymap.set('n', '<leader><space>', require('telescope.builtin').find_files, 
 --   })
 -- end, { desc = 'Fuzzily search in current buffer' })
 
+vim.keymap.set('n', '<leader>cs', require('telescope.builtin').lsp_document_symbols, { desc = 'Document Symbols' })
+vim.keymap.set('n', '<leader>cS', require('telescope.builtin').lsp_dynamic_workspace_symbols, { desc = 'Workspace Symbols' })
 vim.keymap.set('n', '<leader>sf', require('telescope.builtin').find_files, { desc = 'Search Files' })
 vim.keymap.set('n', '<leader>sb', require('telescope.builtin').buffers, { desc = 'Search Buffer' })
 vim.keymap.set('n', '<leader>sh', require('telescope.builtin').help_tags, { desc = 'Search Help' })
@@ -270,7 +250,7 @@ require('nvim-treesitter.configs').setup {
 
   -- Autoinstall languages that are not installed. Defaults to false (but you can change for yourself!)
   auto_install = false,
-
+  autotag = { enable = true },
   highlight = { enable = true },
   indent = { enable = true, disable = { 'python' } },
   incremental_selection = {
@@ -353,8 +333,6 @@ local on_attach = function(client, bufnr)
   nmap('gr', "<cmd>LspUI reference<CR>", 'Goto References')
   nmap('gI', "<cmd>LspUI implementation<CR>", 'Goto Implementation')
   nmap('<leader>cD', "<cmd>LspUI type_definition<CR>", 'Type Definition')
-  nmap('<leader>cs', require('telescope.builtin').lsp_document_symbols, 'Document Symbols')
-  nmap('<leader>cS', require('telescope.builtin').lsp_dynamic_workspace_symbols, 'Workspace Symbols')
 
   nmap('K', "<cmd>LspUI hover  <CR>", 'Hover Documentation')
   nmap('<C-k>', vim.lsp.buf.signature_help, 'Signature Documentation')
@@ -475,10 +453,8 @@ cmp.setup {
     { name = 'nvim_lsp' },
     { name = 'luasnip' },
     { name = 'path' },
-    { name = 'buffer'},
+    { name = 'buffer' },
   },
 }
 
 require("luasnip.loaders.from_vscode").lazy_load()
--- The line beneath this is called `modeline`. See `:help modeline`
--- vim: ts=2 sts=2 sw=2 et
