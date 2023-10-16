@@ -185,6 +185,7 @@ vim.keymap.set({ 'n' }, '<A-c>', '<cmd>bdelete<cr>', { silent = true })
 vim.keymap.set({ 'n' }, '<A-.>', '<cmd>bnext<cr>', { silent = true })
 vim.keymap.set({ 'n' }, '<A-,>', '<cmd>bprevious<cr>', { silent = true })
 vim.keymap.set({ 'n' }, '<leader>w', '<cmd>w<cr>', { desc = 'Save File' })
+vim.keymap.set({ 'n' }, '<leader>z', '<cmd>:ZenMode<cr>', {desc = 'Zen Mode'})
 
 -- Create a console.log with the word under the cursor
 vim.keymap.set({ 'n' }, '<leader>cl',
