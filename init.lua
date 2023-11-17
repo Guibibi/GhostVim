@@ -31,7 +31,7 @@ require('lazy').setup({
 
       -- Useful status updates for LSP
       -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
-      { 'j-hui/fidget.nvim', branch = "legacy", opts = {} },
+      { 'j-hui/fidget.nvim', opts = {} },
 
       -- Additional lua configuration, makes nvim stuff amazing!
       'folke/neodev.nvim',
@@ -112,7 +112,7 @@ require('lazy').setup({
 
   -- NOTE: The import below automatically adds your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
   --    You can use this folder to prevent any conflicts with this init.lua if you're interested in keeping
-  --    up-to-date with whatever is in the kickstart repo.
+  --    up-to-date with whatever is in the kickstart repo.tel
   --
   --    For additional information see: https://github.com/folke/lazy.nvim#-structuring-your-plugins
   --
@@ -125,6 +125,7 @@ require('lazy').setup({
 
 -- [[ Setting options ]]
 -- See `:help vim.o`
+vim.o.autochdir = false
 
 -- Set highlight on search
 vim.o.hlsearch = true
@@ -181,7 +182,7 @@ vim.o.expandtab = false
 -- See `:help vim.keymap.set()`
 vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 
-vim.keymap.set({ 'n' }, '<A-c>', '<cmd>bdelete<cr>', { silent = true })
+vim.keymap.set({ 'n' }, '<A-c>', '<cmd>lua require("mini.bufremove").delete()<cr>', { silent = true })
 vim.keymap.set({ 'n' }, '<A-.>', '<cmd>bnext<cr>', { silent = true })
 vim.keymap.set({ 'n' }, '<A-,>', '<cmd>bprevious<cr>', { silent = true })
 vim.keymap.set({ 'n' }, '<leader>w', '<cmd>w<cr>', { desc = 'Save File' })
@@ -217,7 +218,7 @@ require('telescope').setup {
 
 -- Enable telescope fzf native, if installed
 pcall(require('telescope').load_extension, 'fzf')
-pcall(require('telescope').load_extension, 'projects')
+pcall(require('telescope').load_extension, 'workspaces')
 
 -- See `:help telescope.builtin`
 vim.keymap.set('n', '<leader>?', require('telescope.builtin').oldfiles, { desc = 'Find recently opened files' })
@@ -240,7 +241,6 @@ vim.keymap.set('n', '<leader>sg', require('telescope.builtin').live_grep, { desc
 vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { desc = 'Search Diagnostics' })
 vim.keymap.set('n', '<leader>ss', require('telescope.builtin').lsp_document_symbols, { desc = 'Search Buffer Symbols' })
 vim.keymap.set('n', '<leader>sc', require('telescope.builtin').colorscheme, { desc = 'Search Colorschemes' })
-vim.keymap.set('n', '<leader>sp', require('telescope').extensions.projects.projects, { desc = 'Select Project' })
 
 -- [[ Configure Treesitter ]]
 -- See `:help nvim-treesitter`
@@ -329,10 +329,10 @@ local on_attach = function(client, bufnr)
   nmap('<leader>ca', "<cmd>LspUI code_action<CR>", 'Code Action')
   nmap('<leader>f', vim.lsp.buf.format, 'Format File')
 
-  nmap('gd', "<cmd>LspUI definition<CR>", 'Goto Definition')
-  nmap('gr', "<cmd>LspUI reference<CR>", 'Goto References')
-  nmap('gI', "<cmd>LspUI implementation<CR>", 'Goto Implementation')
-  nmap('<leader>cD', "<cmd>LspUI type_definition<CR>", 'Type Definition')
+  nmap('gd', vim.lsp.buf.definition, 'Goto Definition')
+  nmap('gr', vim.lsp.buf.references, 'Goto References')
+  nmap('gI', vim.lsp.buf.implementation, 'Goto Implementation')
+  nmap('<leader>cD', vim.lsp.buf.type_definition, 'Type Definition')
 
   nmap('K', "<cmd>LspUI hover  <CR>", 'Hover Documentation')
   nmap('<C-k>', vim.lsp.buf.signature_help, 'Signature Documentation')
@@ -342,7 +342,7 @@ local on_attach = function(client, bufnr)
   nmap('gj', "<cmd>LspUI diagnostic next<CR>", "Next diagnostic")
 
   -- Lesser used LSP functionality
-  nmap('gD', "<cmd>LspUI declarationCR>", 'Goto Declaration')
+  nmap('gD', vim.lsp.buf.declaration, 'Goto Declaration')
 
   -- Create a command `:Format` local to the LSP buffer
   vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
@@ -353,6 +353,7 @@ local on_attach = function(client, bufnr)
     vim.cmd.write()
   end, { desc = 'Save current buffer' })
 end
+
 
 
 -- Enable the following language servers
