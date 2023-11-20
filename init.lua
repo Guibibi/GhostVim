@@ -186,7 +186,7 @@ vim.keymap.set({ 'n' }, '<A-c>', '<cmd>lua require("mini.bufremove").delete()<cr
 vim.keymap.set({ 'n' }, '<A-.>', '<cmd>bnext<cr>', { silent = true })
 vim.keymap.set({ 'n' }, '<A-,>', '<cmd>bprevious<cr>', { silent = true })
 vim.keymap.set({ 'n' }, '<leader>w', '<cmd>w<cr>', { desc = 'Save File' })
-vim.keymap.set({ 'n' }, '<leader>z', '<cmd>:ZenMode<cr>', {desc = 'Zen Mode'})
+vim.keymap.set({ 'n' }, '<leader>z', '<cmd>:ZenMode<cr>', { desc = 'Zen Mode' })
 
 -- Create a console.log with the word under the cursor
 vim.keymap.set({ 'n' }, '<leader>cl',
@@ -232,7 +232,8 @@ vim.keymap.set('n', '<leader><space>', require('telescope.builtin').find_files, 
 -- end, { desc = 'Fuzzily search in current buffer' })
 
 vim.keymap.set('n', '<leader>cs', require('telescope.builtin').lsp_document_symbols, { desc = 'Document Symbols' })
-vim.keymap.set('n', '<leader>cS', require('telescope.builtin').lsp_dynamic_workspace_symbols, { desc = 'Workspace Symbols' })
+vim.keymap.set('n', '<leader>cS', require('telescope.builtin').lsp_dynamic_workspace_symbols,
+  { desc = 'Workspace Symbols' })
 vim.keymap.set('n', '<leader>sf', require('telescope.builtin').find_files, { desc = 'Search Files' })
 vim.keymap.set('n', '<leader>sb', require('telescope.builtin').buffers, { desc = 'Search Buffer' })
 vim.keymap.set('n', '<leader>sh', require('telescope.builtin').help_tags, { desc = 'Search Help' })
@@ -241,6 +242,7 @@ vim.keymap.set('n', '<leader>sg', require('telescope.builtin').live_grep, { desc
 vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { desc = 'Search Diagnostics' })
 vim.keymap.set('n', '<leader>ss', require('telescope.builtin').lsp_document_symbols, { desc = 'Search Buffer Symbols' })
 vim.keymap.set('n', '<leader>sc', require('telescope.builtin').colorscheme, { desc = 'Search Colorschemes' })
+vim.keymap.set('n', '<leader>sp', '<cmd>Telescope workspaces<CR>', { desc = 'Switch Workspace' })
 
 -- [[ Configure Treesitter ]]
 -- See `:help nvim-treesitter`
@@ -297,9 +299,6 @@ require('nvim-treesitter.configs').setup {
       },
     },
   },
-  context_commentstring = {
-    enable = true
-  },
 }
 
 
@@ -325,9 +324,11 @@ local on_attach = function(client, bufnr)
     navic.attach(client, bufnr)
   end
 
+  local conform = require("conform")
   nmap('<leader>cr', "<cmd>LspUI rename<CR>", 'Rename')
   nmap('<leader>ca', "<cmd>LspUI code_action<CR>", 'Code Action')
   nmap('<leader>f', vim.lsp.buf.format, 'Format File')
+  nmap('<leaderF', conform.format, 'Format with Conform')
 
   nmap('gd', vim.lsp.buf.definition, 'Goto Definition')
   nmap('gr', vim.lsp.buf.references, 'Goto References')
@@ -346,7 +347,9 @@ local on_attach = function(client, bufnr)
 
   -- Create a command `:Format` local to the LSP buffer
   vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
-    vim.lsp.buf.format()
+    vim.lsp.buf.format({
+
+    })
   end, { desc = 'Format current buffer with LSP' })
 
   vim.api.nvim_buf_create_user_command(bufnr, 'W', function(_)
