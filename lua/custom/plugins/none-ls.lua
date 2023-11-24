@@ -1,14 +1,22 @@
-return {
-	-- 'nvimtools/none-ls.nvim',
-	-- config = function()
-	-- 	local null_ls = require("null-ls")
-	-- 	null_ls.setup({
-	-- 		sources = {
-	-- 			null_ls.builtins.diagnostics.eslint_d,
-	-- 			null_ls.builtins.code_actions.eslint_d,
-	-- 			null_ls.builtins.formatting.eslint_d,
-	-- 			null_ls.builtins.formatting.prettierd,
-	-- 		}
-	-- 	})
-	-- end
-}
+return {}
+-- vim.api.nvim_create_user_command("EslintFixAll", function()
+-- 	vim.cmd("!eslint --fix %")
+-- end, {})
+--
+-- vim.api.nvim_set_keymap("n", "<leader>F", "<cmd>EslintFixAll<CR>", {noremap = true, silent = true})
+--
+-- return {
+-- 	"nvimtools/none-ls.nvim",
+-- 	config = function()
+-- 		local null_ls = require("null-ls")
+-- 		null_ls.setup({
+-- 			sources = {
+-- 				null_ls.builtins.diagnostics.eslint_d,
+-- 				null_ls.builtins.code_actions.eslint_d,
+-- 				-- null_ls.builtins.formatting.eslint_d,
+-- 				null_ls.builtins.formatting.prettierd,
+-- 				null_ls.builtins.formatting.stylua,
+-- 			},
+-- 		})
+-- 	end,
+-- }

@@ -1,5 +1,5 @@
 return {
-	'goolord/alpha-nvim',
+	"goolord/alpha-nvim",
 	lazy = false,
 	config = function()
 		local dashboard = require("alpha.themes.dashboard")
@@ -21,11 +21,11 @@ return {
 			dashboard.button("f", "󰍉  Find file", ":cd $HOME/Workspace | Telescope find_files<CR>"),
 			dashboard.button("?", "  Recent", ":Telescope oldfiles<CR>"),
 			dashboard.button("p", "  Projects", ":Telescope workspaces<CR>"),
-			-- dashboard.button("l", "󰠜 Last session", ":lua require('persistence').load({last = true})<CR>"),
+			dashboard.button("r", "󰠜 Last session", ":SessionRestore<CR>"),
 			dashboard.button("s", "  Edit Config", ":e $MYVIMRC <CR>"),
 			dashboard.button("q", "󰅙  Quit NVIM", ":qa<CR>"),
 		}
 
-		require 'alpha'.setup(dashboard.opts)
-	end
+		require("alpha").setup(dashboard.opts)
+	end,
 }
