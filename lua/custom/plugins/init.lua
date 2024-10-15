@@ -21,4 +21,11 @@ return {
   {
     'rktjmp/lush.nvim',
   },
+  {
+    'kdheepak/lazygit.nvim',
+    lazy = true,
+    keys = {
+      { '<leader>gg', '<cmd>LazyGit<cr>', desc = 'LazyGit' },
+    },
+  },
 }
