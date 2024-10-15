@@ -18,4 +18,7 @@ return {
       require('helpview').setup {}
     end,
   },
+  {
+    'rktjmp/lush.nvim',
+  },
 }
