@@ -727,13 +727,13 @@ require('lazy').setup({
 
       require('mini.files').setup()
 
-      require('mini.diff').setup()
-
       require('mini.map').setup()
 
       require('mini.sessions').setup()
 
       require('mini.starter').setup()
+
+      require('mini.diff').setup()
 
       vim.keymap.set('n', '<leader>go', function()
         require('mini.diff').toggle_overlay(0)
@@ -743,9 +743,9 @@ require('lazy').setup({
         require('mini.files').open(vim.fn.getcwd())
       end, { desc = 'Open File Browser' })
 
-      vim.keymap.set('n', '<leader>tm', function()
-        require('mini.map').toggle()
-      end, { desc = 'Open File Browser' })
+      -- vim.keymap.set('n', '<leader>tm', function()
+      --         require('mini.map').toggle()
+      --       end, { desc = 'Open File Browser' })
 
       -- Simple and easy statusline.
       --  You could remove this setup call if you don't like it,
