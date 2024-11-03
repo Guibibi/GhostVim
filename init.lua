@@ -258,7 +258,16 @@ require('lazy').setup({
       'nvim-tree/nvim-web-devicons',
     },
     config = function()
-      require('fzf-lua').setup {}
+      require('fzf-lua').setup {
+        winopts = {
+          preview = {
+            layout = 'vertical',
+            vertical = 'down:70%',
+          },
+
+          -- fullscreen = true,
+        },
+      }
     end,
     keys = {
       { '<leader><space>', '<cmd>FzfLua files<cr>', desc = 'Find Files' },
@@ -760,7 +769,7 @@ require('lazy').setup({
       -- Load the colorscheme here.
       -- Like many other themes, this one has different styles, and you could load
       -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-      vim.cmd.colorscheme 'tokyonight-night'
+      vim.cmd.colorscheme 'alduin'
 
       -- You can configure highlights by doing something like:
       vim.cmd.hi 'Comment gui=none'
@@ -811,7 +820,11 @@ require('lazy').setup({
 
       vim.keymap.set('n', '<leader>fm', function()
         require('mini.files').open(vim.fn.getcwd())
-      end, { desc = 'Open File Browser' })
+      end, { desc = 'Open File Browser(cwd)' })
+
+      vim.keymap.set('n', '<leader>fM', function()
+        require('mini.files').open(vim.api.nvim_buf_get_name(0), true)
+      end, { desc = 'Open File Browser(Current File directory)' })
 
       -- Simple and easy statusline.
       --  You could remove this setup call if you don't like it,
