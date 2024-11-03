@@ -455,6 +455,10 @@ require('lazy').setup({
       --  - capabilities (table): Override fields in capabilities. Can be used to disable certain LSP features.
       --  - settings (table): Override the default settings passed when initializing the server.
       --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
+
+      -- Get the package location for  the vue typescript plugin
+      local vue_language_server_path = require('mason-registry').get_package('vue-language-server'):get_install_path() .. '/node_modules/@vue/language-server'
+
       local servers = {
         -- clangd = {},
         -- gopls = {},
@@ -466,8 +470,47 @@ require('lazy').setup({
         --    https://github.com/pmizio/typescript-tools.nvim
         --
         -- But for many setups, the LSP (`ts_ls`) will work just fine
-        -- ts_ls = {},
-        --
+        -- ts_ls = {
+        --   init_option = {
+        --     plugins = {
+        --       {
+        --         name = '@vue/typescript-plugin',
+        --         location = vue_typescript_plugin,
+        --         languages = { 'javascript', 'typescript', 'vue' },
+        --       },
+        --     },
+        --   },
+        --   filetypes = {
+        --     'javascript',
+        --     'typescript',
+        --     'vue',
+        --   },
+        -- },
+        vtsls = {
+          filetypes = {
+            'javascript',
+            'javascriptreact',
+            'typescript',
+            'typescriptreact',
+            'vue',
+          },
+          settings = {
+            vtsls = {
+              tsserver = {
+                globalPlugins = {
+                  {
+                    name = '@vue/typescript-plugin',
+                    languages = { 'vue' },
+                    configNamespace = 'typescript',
+                    location = vue_language_server_path,
+                    enableForWorkspaceTypeScriptVersions = true,
+                  },
+                },
+              },
+            },
+          },
+        },
+        volar = {},
 
         lua_ls = {
           -- cmd = {...},
@@ -484,7 +527,6 @@ require('lazy').setup({
           },
         },
       }
-
       -- Ensure the servers and tools above are installed
       --  To check the current status of installed tools and/or manually install
       --  other tools, you can run
@@ -516,6 +558,28 @@ require('lazy').setup({
     end,
   },
 
+  -- Typescript tools
+  --   {'pmizio/typescript-tools.nvim',
+  --   dependencies = { 'nvim-lua/plenary.nvim', 'neovim/nvim-lspconfig' },
+  --   opts = {},
+  --   config = function()
+  --     require('typescript-tools').setup {
+  --       filetypes = {
+  --         'javascript',
+  --         'javascriptreact',
+  --         'typescript',
+  --         'typescriptreact',
+  --         'vue',
+  --       },
+  --       settings = {
+  --         tsserver_plugins = {
+  --           '@vue/typscript-plugin',
+  --         },
+  --       },
+  --     }
+  --   end,
+  -- },
+  --
   { -- Autoformat
     'stevearc/conform.nvim',
     event = { 'BufWritePre' },
