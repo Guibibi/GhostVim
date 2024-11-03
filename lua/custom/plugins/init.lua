@@ -23,6 +23,7 @@ return {
   {
     'rktjmp/lush.nvim',
   },
+  { 'bakageddy/alduin.nvim' },
   {
     'kdheepak/lazygit.nvim',
     lazy = true,
